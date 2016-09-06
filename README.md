@@ -19,6 +19,13 @@ View in GitHub [codedevote/docker-nginx-ssl-proxy-rancher](https://github.com/co
 * __RANCHER\_URL__
  * default: localhost
  
+* __RANCHER\_PORT__
+ * default: 8080
+
+* __RANCHER\_CONTAINER_NAME__
+ * default: rancher
+
+ 
 ## Running codedevote/nginx-ssl-proxy-rancher container
 All the information on running the base image also applies to this container. 
 

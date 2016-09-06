@@ -32,7 +32,7 @@ if [ ! -e "/etc/nginx/external/cert.pem" ] || [ ! -e "/etc/nginx/external/key.pe
 then
   echo ">> generating self signed cert"
   openssl req -x509 -newkey rsa:4086 \
-  -subj "/C=XX/ST=XXXX/L=XXXX/O=XXXX/CN=localhost" \
+  -subj "/C=XX/ST=XXXX/L=XXXX/O=XXXX/CN=$RANCHER_URL" \
   -keyout "/etc/nginx/external/key.pem" \
   -out "/etc/nginx/external/cert.pem" \
   -days 3650 -nodes -sha256
@@ -40,6 +40,8 @@ fi
 
 echo ">> setting rancher url to $RANCHER_URL"
 sed -i "s/\${RANCHER_URL}/$RANCHER_URL/" /etc/nginx/conf.d/rancher.conf
+sed -i "s/\${RANCHER_PORT}/$RANCHER_PORT/" /etc/nginx/conf.d/rancher.conf
+sed -i "s/\${RANCHER_CONTAINER_NAME}/$RANCHER_CONTAINER_NAME/" /etc/nginx/conf.d/rancher.conf
 
 echo ">> copy /etc/nginx/external/*.conf files to /etc/nginx/conf.d/"
 cp /etc/nginx/external/*.conf /etc/nginx/conf.d/ 2> /dev/null > /dev/null
