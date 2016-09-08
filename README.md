@@ -30,7 +30,7 @@ View in GitHub [codedevote/docker-nginx-ssl-proxy-rancher](https://github.com/co
 All the information on running the base image also applies to this container. 
 
 #### Assumptions
-* A rancher server can be reached on the docker network at __http://rancher:8080__ (for information on how to setup a rancher server refer to [https://github.com/rancher/rancher](https://github.com/rancher/rancher)).
+* A rancher server can be reached on the docker network at __http://$RANCHER\_CONTAINER_NAME:$RANCHER\_PORT__ (for information on how to setup a rancher server refer to [https://github.com/rancher/rancher](https://github.com/rancher/rancher)).
 * You bind-mount a directory to __/etc/nginx/external__ with the following minimum contents:
  * SSL certificate (chained for intermediate CAs) in a file called __cert.pem__
  * Private key in a file called __key.pem__
@@ -42,6 +42,8 @@ To run this image you can use the following command:
     docker run -d \
     -p 80:80 -p 443:443 \
     -e 'RANCHER_URL=rancher.example.org' \
+    -e 'RANCHER_CONTAINER_NAME=rancher' \
+    -e 'RANCHER_PORT=8080' \
     -v $EXT_DIR:/etc/nginx/external/ \
     codedevote/nginx-ssl-proxy-rancher
 
