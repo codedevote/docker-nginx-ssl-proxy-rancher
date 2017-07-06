@@ -30,7 +30,8 @@ View in GitHub [codedevote/docker-nginx-ssl-proxy-rancher](https://github.com/co
 All the information on running the base image also applies to this container. 
 
 #### Assumptions
-* A rancher server can be reached on the docker network at __http://$RANCHER\_CONTAINER_NAME:$RANCHER\_PORT__ (for information on how to setup a rancher server refer to [https://github.com/rancher/rancher](https://github.com/rancher/rancher)).
+* Since the nginx container needs to communicate with the rancher container, you need to make sure, there is a link between those two containers. You can either use the (deprecated) --link option to link the rancher container to the nginx container or you put both containers on a docker network (by creating one useing *docker network create*). There seems to be an issue (see #2) using the default docker bridge network, so make sure, you create a dedicated network and hook both containers to this network by adding the *--net* option to your *docker run* command.
+* The rancher server can be reached from nginx container on the docker network at __http://$RANCHER\_CONTAINER_NAME:$RANCHER\_PORT__ (for information on how to setup a rancher server refer to [https://github.com/rancher/rancher](https://github.com/rancher/rancher)).
 * You bind-mount a directory to __/etc/nginx/external__ with the following minimum contents:
  * SSL certificate (chained for intermediate CAs) in a file called __cert.pem__
  * Private key in a file called __key.pem__
